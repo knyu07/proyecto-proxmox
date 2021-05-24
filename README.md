@@ -51,10 +51,16 @@ Se debe de sumar RAM de las Maquinas virtuales que se van a crear.
 
 1.- Una vez descargado la ISO de Proxmox es necesario crear una media "booteable" ya sea una USB o CD/DVD para arrancar la instalación en el equipo.
 
+![](images/instalador.png)
+
 - URL de descarga: https://www.proxmox.com/en/downloads
 
 2.- Dependiendo de la BIOS del servidor, sera necesario realizar los ajustes necesario para que corra la media booteable. Una vez iniciada la media comenzamos con el instalador. 
 
 3.- Es necesario especificar la ubicación, disco duro de instalación, datos para la cuenta de administrador y configuración de red. Posteriormente el Instalador terminara la instalación en automatico.
+
+Entramos desde nuestro navegador con: **https://direccion_ip:8006**, iniciamos sesión y nos encontraremos con nuestro menú de Proxmox preparado para virtualizar. 
+
+![](images/menu.png)
 
 
