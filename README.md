@@ -28,3 +28,33 @@ Está en distribuciones GNU/Linux basadas en Debian con una versión modificada 
 - **Integración con NAS o SAN** ya sea a través de Fibra Canal, iSCSI Over Ethernet o NFS.
 
 - **Almacenamiento Hiperconvergente** con Ceph o ZFS de facil administración utilizando solo la interfaz web.
+
+## Instalación de Proxmox VE:
+
+Proxmox VE es fácil y rápido de instalar, solo descargando la imagen ISO e iniciar la instalación en su equipo, en cinco minutos comenzará a crear sus primeras máquinas virtuales y/o contenedores. La configuración se realiza fácilmente a través de la interfaz web.
+
+
+### Hardware mínimo recomendado: 
+
+- Procesador en 64bits (Intel EMT64 ó AMD64), de preferencia con múltiples núcleos
+- Tarjeta Madre con soporte para virtualización (Intel VT ó AMD-V)
+- 2 GB en RAM, solo servicios PVE.
+- Discos duros rápidos (15k rpm SAS, SSD)
+- Soporte para RAID por hardware o ZFS
+- Tarjetas de red Gbit (Cantidad según la configuración de almacenamiento externo y/o cluster)
+
+Para Ceph o ZFS se requiere memoria adicional, aproximadamente 1 GB de memoria por cada TB utilizada de almacenamiento.
+
+Se debe de sumar RAM de las Maquinas virtuales que se van a crear.
+
+### Pasos a seguir: 
+
+1.- Una vez descargado la ISO de Proxmox es necesario crear una media "booteable" ya sea una USB o CD/DVD para arrancar la instalación en el equipo.
+
+- URL de descarga: https://www.proxmox.com/en/downloads
+
+2.- Dependiendo de la BIOS del servidor, sera necesario realizar los ajustes necesario para que corra la media booteable. Una vez iniciada la media comenzamos con el instalador. 
+
+3.- Es necesario especificar la ubicación, disco duro de instalación, datos para la cuenta de administrador y configuración de red. Posteriormente el Instalador terminara la instalación en automatico.
+
+
