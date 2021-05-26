@@ -72,7 +72,7 @@ Vamos a visualizar como va a estar estructurada la red. Tendremos a nuestra disp
 
 ![](images/red2.png)
 
-Después de instalar los Proxmos hijos procedemos a la configuración de estos. Queremos que ambos estén en una red en la que solo se puedan ver entre ellos, por lo que dentro de pve > Red, añadimos un **Linux Bridge** con la nueva red, la cual cambiaremos dentro de las máquinas virtuales de Proxmox hijos, en Hardware, además de modificar los archivos de configuración dentro de **/etc/network/interfaces** y comprobamos que los cambios se han aplicado y que ambos Proxmox se vean entre ellos. 
+Después de instalar los Proxmos hijos procedemos a la configuración de estos. Queremos que ambos estén en una red en la que solo se puedan ver entre ellos, por lo que dentro de **pve > Red**, añadimos un **Linux Bridge** con la nueva red, la cual cambiaremos dentro de las máquinas virtuales de Proxmox hijos, en Hardware, además de modificar los archivos de configuración dentro de **/etc/network/interfaces** y comprobamos que los cambios se han aplicado y que ambos Proxmox se vean entre ellos. 
 
 Una vez tengamos ya preparadas las máquinas virtuales podríamos comenzar con la creación del cluster pero antes vamos a hacer un snapshot para tener una copia del estado de la máquina virtual por si tenemos que volver atrás. Para ello es necesario que el almacenamiento de la máquina esté en LVM-Thin. En el caso de no tener este volumen mediante consola usamos: 
 
