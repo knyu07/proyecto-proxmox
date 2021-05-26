@@ -64,7 +64,7 @@ Entramos desde nuestro navegador con: **https://direccion_ip:8006**, iniciamos s
 ![](images/menu.png)
 
 ## Puesta en marcha: 
-Como propuesta de proyecto vamos montar dos servidores Proxmox, que estas estén unidas por un cluster y que disponga de alta disponibilidad. Por falta de recursos se hará todo mediante máquinas virtuales. 
+Como propuesta de proyecto vamos montar un cluster con dos nodos que tenga alta disponibilidad. Por falta de recursos se hará todo mediante máquinas virtuales. 
 
 ### ESQUEMA DE LA RED
 
