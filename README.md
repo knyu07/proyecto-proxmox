@@ -55,7 +55,7 @@ Se debe de sumar RAM de las Maquinas virtuales que se van a crear.
 
 - URL de descarga: https://www.proxmox.com/en/downloads
 
-2.- Dependiendo de la BIOS del servidor, sera necesario realizar los ajustes necesario para que corra la media booteable. Una vez iniciada la media comenzamos con el instalador. 
+2.- Dependiendo de la BIOS del servidor, sera necesario realizar los ajustes necesario para que corra la media booteable, ya que puede estar desactivado el Intel VT-x para virtualización,  que ayudan a acelerar aplicaciones de máquina virtual. Una vez iniciada la media comenzamos con el instalador. 
 
 3.- Es necesario especificar la ubicación, disco duro de instalación, datos para la cuenta de administrador y configuración de red. Posteriormente el Instalador terminara la instalación en automatico.
 
@@ -63,4 +63,15 @@ Entramos desde nuestro navegador con: **https://direccion_ip:8006**, iniciamos s
 
 ![](images/menu.png)
 
+## Puesta en marcha: 
+Como propuesta de proyecto vamos montar dos servidores Proxmox, que estas estén unidas por un cluster y que disponga de alta disponibilidad. Por falta de recursos se hará todo mediante máquinas virtuales. 
 
+### ESQUEMA DE LA RED
+
+Vamos a visualizar como va a estar estructurada la red. Tendremos a nuestra disposición un servidor físico en donde estará el Proxmox padre conectada al router de la empresa y dentro de este Proxmox padre crearemos otros dos Proxmox hijos virtualizados para hacer la prueba, que tendrán su propia red para verse entre ellas. Estos dos Proxmox hijos estarán únidos por un cluster que dispondrá de alta disponibilidad mediante un servidor FreeNas que se usará de almacenamiento para compartir el contenido de los nodos. 
+
+![](images/red2.png)
+
+Después de instalar los Proxmos hijos procedemos a la configuración de estos. Queremos que ambos estén en una red en la que solo se puedan ver entre ellos, por lo que dentro de pve > Red, añadimos un Linux Bridge con la nueva red, la cual cambiaremos dentro de las VM de Proxmox hijos, en Hardware, además de modificar los archivos de configuración dentro de /etc/network/interfaces y comprobamos que los cambios se han aplicado y que ambos Proxmox se ven entre ellos. 
+
+Una vez tengamos ya preparadas las VM's podríamos comenzar con la unión cluster pero antes vamos a hacer una replicación para tener una copia del estado de la VM por si tenemos que volver atrás. Para ello es necesario que el almacenamiento de la máquina este en formato LVM-Thin.
