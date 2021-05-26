@@ -49,7 +49,7 @@ Se debe de sumar RAM de las Maquinas virtuales que se van a crear.
 
 ### Pasos a seguir: 
 
-1.- Una vez descargado la ISO de Proxmox es necesario crear una media "booteable" ya sea una USB o CD/DVD para arrancar la instalación en el equipo.
+1.- Una vez descargado la ISO de Proxmox es necesario crear una media ejecutable ya sea una USB o CD/DVD para arrancar la instalación en el equipo.
 
 ![](images/instalador.png)
 
