@@ -68,7 +68,7 @@ Como propuesta de proyecto vamos montar dos servidores Proxmox, que estas estén
 
 ### ESQUEMA DE LA RED
 
-Vamos a visualizar como va a estar estructurada la red. Tendremos a nuestra disposición un servidor físico donde estará el Proxmox padre conectada al router de la empresa y dentro de este Proxmox padre crearemos otros dos Proxmox hijos virtualizados para hacer la prueba, que tendrán su propia red para verse entre ellas. Estos dos Proxmox hijos estarán únidos por un cluster que dispondrá de alta disponibilidad mediante un servidor FreeNas que se usará de almacenamiento para compartir el contenido de los nodos para que en el caso de que si uno de ellos falla todo se translade a otro nodo para que se pueda seguir utilizando. 
+Vamos a visualizar como va a estar estructurada la red. Tendremos a nuestra disposición un servidor físico donde estará el Proxmox padre conectada al router de la empresa y dentro de este Proxmox padre crearemos otros dos Proxmox hijos virtualizados para hacer la prueba, que tendrán su propia red para verse entre ellas. Estos dos Proxmox hijos estarán únidos por un cluster que tendrá alta disponibilidad mediante un servidor FreeNas que se usará de almacenamiento para compartir el contenido de los nodos para que en el caso de fallo todo se translade a otro nodo y así no paralizar nuestro servicio. 
 
 ![](images/red2.png)
 
