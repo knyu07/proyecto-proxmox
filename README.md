@@ -70,8 +70,9 @@ Como propuesta de proyecto vamos montar un cluster con dos nodos que tenga alta 
 
 Dentro de el servidor físico, que estará conectada a la red de la empresa, se montará una máqueta que dispondrá de dos Proxmox unidos a un cluster con alta disponibilidad, mediante un servidor NAS que compartirá el almacenamiento de ambos nodos.
 
-Para está máqueta decidí introducirlas en una red aparte para evistar conflicto con las direcciones IP de la empresa además de así tener un orden. 
+![](images/red.png)
 
+Para está máqueta decidí introducirlas en una red aparte para evistar conflicto con las direcciones IP de la empresa además de así tener un orden. 
 
 ![](images/estructura.png)
 
