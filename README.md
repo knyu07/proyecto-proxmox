@@ -63,42 +63,41 @@ Entramos desde nuestro navegador con: **https://direccion_ip:8006**, iniciamos s
 
 ![](images/menu.png)
 
-## Puesta en marcha: 
+## **PROYECTO:**
 Como propuesta de proyecto vamos montar un cluster con dos nodos que tenga alta disponibilidad. Por falta de recursos se hará todo mediante máquinas virtuales. 
 
 ### ESQUEMA DE LA RED
 
-Vamos a visualizar como va a estar estructurada la red. Tendremos a nuestra disposición un servidor físico donde estará el Proxmox padre conectada al router de la empresa y dentro de este Proxmox padre crearemos otros dos Proxmox hijos virtualizados para hacer la prueba, que tendrán su propia red para verse entre ellas. Estos dos Proxmox hijos estarán únidos por un cluster que tendrá alta disponibilidad mediante un servidor FreeNas que se usará de almacenamiento para compartir el contenido de los nodos para que en el caso de fallo todo se translade a otro nodo y así no paralizar nuestro servicio. 
+Dentro de el servidor físico, que estará conectada a la red de la empresa, se montará una máqueta que dispondrá de dos Proxmox unidos a un cluster con alta disponibilidad, mediante un servidor NAS que compartirá el almacenamiento de ambos nodos.
+
+Para está máqueta decidí introducirlas en una red aparte para evistar conflicto con las direcciones IP de la empresa además de así tener un orden. 
 
 ![](images/red2.png)
 
-Después de instalar los Proxmos hijos procedemos a la configuración de estos. Queremos que ambos estén en una red en la que solo se puedan ver entre ellos, por lo que dentro de **pve > Red**, añadimos un **Linux Bridge** con la nueva red, la cual cambiaremos dentro de las máquinas virtuales de Proxmox hijos, en Hardware, además de modificar los archivos de configuración dentro de **/etc/network/interfaces** y comprobamos que los cambios se han aplicado y que ambos Proxmox se vean entre ellos. 
+Para que ambos nodos se comunicasen entre si de manera privada cree un Linux Bridge dentro del servidor físico y cambié los dispositivos en red de estos, además de cambiarlos dentro de los archivos de configuración que está en: **/etc/network/interfaces**. 
 
-Una vez tengamos ya preparadas las máquinas virtuales podríamos comenzar con la creación del cluster pero antes vamos a hacer un snapshot para tener una copia del estado de la máquina por si tenemos que volver atrás. Para ello es necesario que el almacenamiento de la máquina esté en LVM-Thin. En el caso de no tener este volumen mediante consola usamos: 
+> - NOTA: Reiniciar máquinas para que se apliquen los cambios. 
+
+
+Ahora antes de crear el cluster haremos un snapshot de los nodos para que en caso de fallo, tener la posibilidad de volver atrás. Para ello, el almacenamiento de los nodos tiene que estar en lvmthin. 
+
+> - NOTA: En la práctica tuve problemas a la hora de hacer el snapshot, además de tener que aumentar el espacio, dicho volumen estaba en lvm y tuve que borrar el que había, crear un volumen nuevo y convertirla en lvmthin. Esto se debe a que lvm y lvmthin gestionan la memoria de distinta manera y es necesario para el snapshot. 
+
+-- SOLUCIÓN: 
 
 ```
-Crear un volumen con la capacidad que deseemos
-- lvcreate -L 100G -n data pve
+Se crea el volumen con la capacidad que queramos
+- lvcreate -L 500G -n data pve
 
 Y seguidamente lo convertimos en lvmthin 
 - lvconvert --type thin-pool pve/data
 ```
-Esto se hace debido a que el volumen lvm y lvmthin gestionan la memoria de manera distinta y para el snapshot es necesario que esté en lvmthin. Otra solución es hacer un backup completo de la máquina. 
+Otra alternativa al snapshot es hacer un **backup** de los nodos, pero se tiene que tener en cuenta las diferencias entre ambas dependiendo de lo que necesitemos.
 
-Ya instalado y configurado los Proxmox, tendríamos los dos nodos necesarios para poder crear el cluster, en uno de ellos nos dirigimos a **Centro de datos > Cluster** y lo creamos. Añadimos el Linux Bridge que vaya a utilizar y le damos un nombre. Una vez creado, en el segundo nodo lo que haremos será unirlo al cluster
+Ya instalado y configurado nuestros nodos comenzamos con la creación del cluster, para ello nos situamos en uno de los dos proxmox que tenemos, nos dirigimos a **Centro de datos > Cluster > Crear** y añadimos el Linux Bridge y le ponemos un nombre.  
 
 ![](images/cluster.png)
 
- También podemos crear el cluster mediante comandos: 
- 
- ```
- Creamos cluster en el nodo principal:
- - pvecm create CLUSTER-PROX
+Con el cluster creado queda unir el segundo nodo dentro de **Centro de datos > Cluster > Unir**, se pedirán unas credenciales que encontraremos en el nodo donde se ha creado. 
 
-Comprobamos que se haya creado bien: 
-- pvecm status 
-
-Añadimos al cluster el otro nodo
-- pvecm add direccion_ip 
-```
-
+![](images/nodo2.png)
