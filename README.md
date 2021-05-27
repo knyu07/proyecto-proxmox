@@ -72,6 +72,7 @@ Dentro de el servidor físico, que estará conectada a la red de la empresa, se 
 
 Para está máqueta decidí introducirlas en una red aparte para evistar conflicto con las direcciones IP de la empresa además de así tener un orden. 
 
+
 ![](images/red2.png)
 
 Para que ambos nodos se comunicasen entre si de manera privada cree un Linux Bridge dentro del servidor físico y cambié los dispositivos en red de estos, además de cambiarlos dentro de los archivos de configuración que está en: **/etc/network/interfaces**. 
