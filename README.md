@@ -64,17 +64,17 @@ Entramos desde nuestro navegador con: **https://direccion_ip:8006**, iniciamos s
 ![](images/menu.png)
 
 ## **PROYECTO:**
-Como propuesta de proyecto vamos montar un cluster con dos nodos que tenga alta disponibilidad. Por falta de recursos se hará todo mediante máquinas virtuales. 
+Como propuesta de proyecto vamos montar un cluster con 3 nodos que tenga alta disponibilidad. Por falta de recursos se hará todo mediante máquinas virtuales. 
 
 ### ESQUEMA DE LA RED
 
-Dentro de el servidor físico, que estará conectada a la red de la empresa, se montará una máqueta que dispondrá de dos Proxmox unidos a un cluster con alta disponibilidad, mediante un servidor NAS que compartirá el almacenamiento de ambos nodos.
+Dentro del servidor físico, que estará conectada a la red de la empresa, se montará una máqueta que dispondrá de tres Proxmox unidos a un cluster con almacenamiento compartido y alta disponibilidad.
 
 Para está máqueta decidí introducirlas en una red aparte para evistar conflicto con las direcciones IP de la empresa además de así tener un orden. 
 
 ![](images/estructura_red.png)
 
-Para que ambos nodos se comunicasen entre si de manera privada cree un Linux Bridge dentro del servidor físico y cambié los dispositivos en red de estos, además de cambiarlos dentro de los archivos de configuración que está en: **/etc/network/interfaces**. 
+Para que estos nodos se comunicasen entre si de manera privada cree un Linux Bridge dentro del servidor físico y cambié los dispositivos en red de estos, además de cambiarlos dentro de los archivos de configuración que está en: **/etc/network/interfaces**. 
 
 > - NOTA: Reiniciar máquinas para que se apliquen los cambios. 
 
@@ -94,7 +94,7 @@ Y seguidamente lo convertimos en lvmthin
 ```
 Otra alternativa al snapshot es hacer un **backup** de los nodos, pero se tiene que tener en cuenta las diferencias entre ambas dependiendo de lo que necesitemos.
 
-Ya instalado y configurado nuestros nodos comenzamos con la creación del cluster, para ello nos situamos en uno de los dos proxmox que tenemos, nos dirigimos a **Centro de datos > Cluster > Crear** y añadimos el Linux Bridge y le ponemos un nombre.  
+Ya instalado y configurado nuestros nodos comenzamos con la creación del cluster, para ello nos situamos en uno de los tres proxmox que tenemos, nos dirigimos a **Centro de datos > Cluster > Crear** y añadimos el Linux Bridge y le ponemos un nombre.  
 
 ![](images/cluster.png)
 
