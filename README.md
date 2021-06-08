@@ -64,17 +64,17 @@ Entramos desde nuestro navegador con: **https://direccion_ip:8006**, iniciamos s
 ![](images/menu.png)
 
 ## **PROYECTO:**
-Como propuesta de proyecto vamos montar un cluster con 3 nodos que tenga alta disponibilidad. Por falta de recursos se hará todo mediante máquinas virtuales. 
+Como propuesta de proyecto vamos montar un cluster con tres nodos que tenga alta disponibilidad. Por falta de recursos se hará todo mediante máquinas virtuales. 
 
 ### ESQUEMA DE LA RED
 
 Dentro del servidor físico, que estará conectada a la red de la empresa, se montará una máqueta que dispondrá de tres Proxmox unidos a un cluster con almacenamiento compartido y alta disponibilidad.
 
-Para está máqueta decidí introducirlas en una red aparte para evistar conflicto con las direcciones IP de la empresa además de así tener un orden. 
+Para está máqueta cree una subred para evistar conflicto con las direcciones IP de la empresa, además de ir más rápido ya que no hay tanto tráfico. 
 
 ![](images/estructura_red.png)
 
-Para que estos nodos se comunicasen entre si de manera privada cree un Linux Bridge dentro del servidor físico y cambié los dispositivos en red de estos, además de cambiarlos dentro de los archivos de configuración que está en: **/etc/network/interfaces**. 
+Para que estos nodos se comunicasen entre si de manera privada cree un Linux Bridge dentro del servidor físico y cambié los dispositivos en red de estos dentro de **/etc/network/interfaces** o mediante la GUI de Proxmox. 
 
 > - NOTA: Reiniciar máquinas para que se apliquen los cambios. 
 
@@ -101,3 +101,26 @@ Ya instalado y configurado nuestros nodos comenzamos con la creación del cluste
 Con el cluster creado queda unir el segundo nodo dentro de **Centro de datos > Cluster > Unir**, se pedirán unas credenciales que encontraremos en el nodo donde se ha creado. 
 
 ![](images/nodo2.png)
+
+Si se ha hecho bien debería aparecernos algo así que confirme que los nodos se han unido correctamente al cluster:
+
+![](images/cluster1.png)
+
+A continuación para que tenga alta disponibilidad deberemos crear un almacenamiento compartido, para que toda la información se copie en todos los nodos. Se puede hacer de varias formas, en mi caso hice uso del **Ceph**. 
+
+> - Ceph es un sistema de ficheros dedicado para múltiples servidores, por eso es necesario tener mínimo tres nodos, ya que necesita tener una copia activa para funcionar. Una ventaja de este sistema en comparación, por ejemplo, ZFS, es que con Ceph se pueden migrar las máquinas estando encendidas, es decir, que no entorpecería el uso del contenedor o máquina virtual por lo que se puede seguir trabajo en ella pero, cuando migra hasta que no termine de pasarse a todos los nodos la información no se afianza.
+
+Ceph no viene instalado por defecto, así que en cada nodo tendremos que instalarlo por separado (se puede instalar mediante consola o desde la GUI) y le añadiremos la dirección IP por nodo. 
+
+![](images/ceph.png)
+
+Una vez instalado por cada nodo nos ubicamos en **Ceph**, desplegamos y dentro de **Monitores** añadiremos los monitores y los management de todos los nodos
+
+![](images/ceph1.png)
+
+Y para finalizar añadiremos el disco compartido dentro de **OSD**. Para esto he añadido un disco duro a cada nodo para su uso en concreto. 
+
+![](images/ceph2.png)
+
+Habiendo seguido estos pasos tendríamos nuestro almacenamiento compartido y solo quedaría habilitar la alta disponibilidad. 
+
