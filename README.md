@@ -108,7 +108,7 @@ Si se ha hecho bien debería aparecernos algo así que confirme que los nodos se
 
 A continuación para que tenga alta disponibilidad deberemos crear un almacenamiento compartido, para que toda la información se copie en todos los nodos. Se puede hacer de varias formas, en mi caso hice uso del **Ceph**. 
 
-> - **Ceph** es un sistema de ficheros dedicado para múltiples servidores, por eso es necesario tener mínimo tres nodos, ya que necesita tener una copia activa para funcionar. Una ventaja de este sistema en comparación, por ejemplo, ZFS, es que con Ceph se pueden migrar las máquinas estando encendidas, es decir, que no entorpecería el uso del contenedor o máquina virtual por lo que se puede seguir trabajo en ella pero, cuando migra hasta que no termine de pasarse a todos los nodos la información no se afianza.
+> - **Ceph** es un sistema de ficheros dedicado para múltiples servidores, por eso es necesario tener mínimo tres nodos, ya que necesita tener una copia activa para funcionar. Una ventaja de este sistema en comparación, por ejemplo, ZFS, es que con Ceph se pueden migrar las máquinas estando encendidas, es decir, que no entorpecería el uso del contenedor o máquina virtual por lo que se puede seguir trabajo en ella pero, cuando migra hasta que no termine de pasarse toda la información a todos los nodos no se afianza.
 
 Ceph no viene instalado por defecto, así que en cada nodo tendremos que instalarlo por separado (se puede instalar mediante consola o desde la GUI) y le añadiremos la dirección IP por nodo. 
 
