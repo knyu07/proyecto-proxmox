@@ -108,13 +108,13 @@ Si se ha hecho bien debería aparecernos algo así que confirme que los nodos se
 
 A continuación para que tenga alta disponibilidad deberemos crear un almacenamiento compartido, para que toda la información se copie en todos los nodos. Se puede hacer de varias formas, en mi caso hice uso del **Ceph**. 
 
-> - Ceph es un sistema de ficheros dedicado para múltiples servidores, por eso es necesario tener mínimo tres nodos, ya que necesita tener una copia activa para funcionar. Una ventaja de este sistema en comparación, por ejemplo, ZFS, es que con Ceph se pueden migrar las máquinas estando encendidas, es decir, que no entorpecería el uso del contenedor o máquina virtual por lo que se puede seguir trabajo en ella pero, cuando migra hasta que no termine de pasarse a todos los nodos la información no se afianza.
+> - **Ceph** es un sistema de ficheros dedicado para múltiples servidores, por eso es necesario tener mínimo tres nodos, ya que necesita tener una copia activa para funcionar. Una ventaja de este sistema en comparación, por ejemplo, ZFS, es que con Ceph se pueden migrar las máquinas estando encendidas, es decir, que no entorpecería el uso del contenedor o máquina virtual por lo que se puede seguir trabajo en ella pero, cuando migra hasta que no termine de pasarse a todos los nodos la información no se afianza.
 
 Ceph no viene instalado por defecto, así que en cada nodo tendremos que instalarlo por separado (se puede instalar mediante consola o desde la GUI) y le añadiremos la dirección IP por nodo. 
 
 ![](images/ceph.png)
 
-Una vez instalado por cada nodo nos ubicamos en **Ceph**, desplegamos y dentro de **Monitores** añadiremos los monitores y los management de todos los nodos
+Una vez instalado, por cada nodo nos ubicamos en **Ceph**, desplegamos y dentro de **Monitores** añadiremos los monitores y los management de todos los nodos
 
 ![](images/ceph1.png)
 
@@ -122,5 +122,19 @@ Y para finalizar añadiremos el disco compartido dentro de **OSD**. Para esto he
 
 ![](images/ceph2.png)
 
-Habiendo seguido estos pasos tendríamos nuestro almacenamiento compartido y solo quedaría habilitar la alta disponibilidad. 
+Seguido estos pasos tendríamos nuestro almacenamiento compartido y solo quedaría habilitar la alta disponibilidad.
 
+> - La **Alta Disponibilidad** (High Availability) se aplica cuando queremos tener un plan de contingencia sobre cualquier componente que tenga alguna situación anómala para poder seguir dando el servicio del mismo.
+
+Para activar la alta disponibilidad dentro del cluster creamos un grupo dentro de HA en donde meteremos los nodos. Dentro del grupo podemos configurarla de la siguiente manera:
+
+
+- **nofailback**: El CRM intenta ejecutar los servicios en el nodo con mayor prioridad. Si un nodo con mayor prioridad se conecta, el CRM migra el servicio a ese nodo. La activación de nofailback evita este comportamiento.
+
+- **restricted**: Los recursos de los grupos no restringidos pueden ejecutarse en cualquier nodo del clúster si todos los miembros del grupo están desconectados, pero volverán a migrar en cuanto un miembro del grupo se conecte.
+
+O definir nosotros mismos la prioridad de los nodos. 
+
+![](images/ha.png)
+
+Finalmente solo nos queda crear las máquinas o contenedores (en mi caso he creado un contenedor Wordpress) y lo añadiremos dentro de HA para que tenga Alta Disponibilidad. 
